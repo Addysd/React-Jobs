@@ -2,6 +2,8 @@
 
 React Jobs is a web application that allows users to browse, search, and post job listings. The application provides a user-friendly interface for job seekers to find opportunities and for employers to add new job listings with detailed information.
 
+![Project HomePage](C:\React-Jobs\screen.png)
+
 ## Uses and Features
 
 - **Job Seekers**: Users looking for new job opportunities can browse and search through various job listings. They can filter jobs based on criteria like job type, location, and salary range.
@@ -13,6 +15,6 @@ React Jobs is a web application that allows users to browse, search, and post jo
 ## Tech Stack
 
 - **Frontend**: React, Tailwind CSS, React Router
-- **Backend**: Json Server(fake REST API)
+- **Backend**: Json Server(mock backend)
 - **Miscellaneous**:Vite, Git
  
