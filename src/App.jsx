@@ -1,64 +1,50 @@
-import {
-  Route,
-   createBrowserRouter,
-    createRoutesFromElements ,
-     RouterProvider} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'; 
+import JobListing from './JobListing';
+import Spinner from './Spinner';
 
-import HomePage from './pages/HomePage';
-import MainLayout from './layouts/MainLayout';
-import JobsPage from './pages/JobsPage';
-import NotFound from './pages/NotFound';
-import JobPage,{jobLoader} from './pages/JobPage';
-import AddJobPage from './pages/AddJobPage';
-import EditJobPage from './pages/EditJobPage';
- 
+const JobListings = ({isHome=false}) => {
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-const App = () => {
-  const addJob= async (newJob)=>{
-    const res=await fetch('/api/jobs',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify(newJob),
-    });
-    return;
-  };
+    useEffect(() => {
+      const fetchJobs = async () => {
+        const apiUrl = isHome
+          ? '/api/jobs?_limit=3'
+          : '/api/jobs';
+        try {
+          const res = await fetch(apiUrl);
+          const data = await res.json();
+          setJobs(data);
+        } catch (error) {
+          console.log('Error fetching data', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchJobs();
+    }, [isHome]);
 
-  const deleteJob = async(id )=>{
-    const res=await fetch(`/api/jobs/${id}`,{
-      method:'DELETE',
-    });
-    return;
-  };
-
-  const updatedJob=async(job)=>{
-    const res=await fetch(`/api/jobs/${jobs.id}`,{
-      method:'PUT',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify(job),
-    });
-    return;
-  };
-  const router=createBrowserRouter(
-    createRoutesFromElements(
-    <Route path='/' element={<MainLayout/>}>
-    <Route index element={<HomePage/>}/>
-    <Route path='/jobs' element={<JobsPage/>}/>
-    <Route path='/add-job' element={<AddJobPage addJobSubmit={addJob}/>} />
-  
-    <Route path='/jobs/:id' element={<JobPage deleteJob={deleteJob}/>} loader={jobLoader}/>
-    <Route path='*' element={<NotFound/>}/>
-    <Route path='edit-job/:id' element={<EditJobPage updatedJobSubmit={updatedJob}/>} loader={jobLoader}/>
-    
-
-    </Route>
-    )
-   );
-
-  return <RouterProvider router={router}/>;
+    return (
+      <section className="bg-blue-50 px-4 py-10">
+        <div className="container-xl lg:container m-auto">
+          <h2 className="text-3xl font-bold text-indigo-500 mb-6 text-center">
+            {isHome ? 'Recent Jobs' : 'Browse Jobs'}
+          </h2>
+          {loading ? (<Spinner loading={loading} />) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6"> 
+              {jobs.map((job) => (
+                <JobListing key={job.id} job={job} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    );
 };
 
-export default App;
+JobListings.propTypes = {
+  isHome: PropTypes.bool,
+};
+
+export default JobListings;
