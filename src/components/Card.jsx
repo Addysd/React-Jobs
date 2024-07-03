@@ -13,8 +13,6 @@ Card.propTypes = {
     bg: PropTypes.string 
   };
   
-  Card.defaultProps = {
-    bg: 'bg-gray-100'
-  };
+ 
 
 export default Card;
