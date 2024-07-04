@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://json-server-7xnc.onrender.com',
+        target: 'https://json-server-7xnc.onrender.com/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
