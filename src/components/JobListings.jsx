@@ -15,12 +15,16 @@ const JobListings = ({isHome=false}) => {
         try{
           const res=await fetch(apiUrl);
         const data=  await res.json();
-        setJobs(data);
-        }catch(error){
-          console.log('error fetching data',error);
-        }finally{
-          setLoading(false);
+        if (Array.isArray(data)) {
+          setJobs(data);
+        } else {
+          console.error('Unexpected data structure:', data);
         }
+      } catch (error) {
+        console.error('Error fetching data', error);
+      } finally {
+        setLoading(false);
+      }
         
       };
       fetchJobs();
