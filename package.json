@@ -9,8 +9,7 @@
     "start": "vite",
 
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "server": "json-server --watch src/jobs.json --port 8000"
+    "preview": "vite preview"
   },
   "dependencies": {
     "prop-types": "^15.8.1",
