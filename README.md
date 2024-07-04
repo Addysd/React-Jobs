@@ -16,4 +16,4 @@ React Jobs is a web application that allows users to browse, search, and post jo
 
 - **Frontend**: React, Tailwind CSS, React Router
 - **Backend**: Json Server(mock backend)
-- **Miscellaneous**:Vite, Git
+- **Miscellaneous**:Vite, Git, Vercel
